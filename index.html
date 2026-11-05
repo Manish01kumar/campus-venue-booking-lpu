@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101b35">
+  <title>LPU CampusSpace | Venue Reservation</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS Connection -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="CampusSpace home">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 10.5 12 3l9 7.5V21H3z"/>
+            <path d="M9 21v-7h6v7M7 10h.01M17 10h.01"/>
+          </svg>
+        </span>
+        <span>LPU<span class="brand-light">Space</span>
+          <small>LOVELY PROFESSIONAL UNIVERSITY</small>
+        </span>
+      </a>
+
+      <div class="lpu-campus-tag">PHAGWARA CAMPUS</div>
+      <div class="side-label">WORKSPACE</div>
+
+      <nav class="nav-menu">
+        <a class="nav-link active" href="#overview">▦ Overview</a>
+        <a class="nav-link" href="#venues">▤ Venue directory</a>
+        <a class="nav-link" href="#calendar">▦ Reservation calendar</a>
+        <a class="nav-link" href="#requests">
+          ↗ Booking requests
+          <span class="nav-count" id="requestNavCount">2</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <div class="help-icon">✦</div>
+          <strong>Need a space?</strong>
+          <p>Find the right venue for your next campus event.</p>
+          <a href="#venues">Explore venues →</a>
+        </div>
+
+        <div class="profile">
+          <div class="avatar">AD</div>
+          <div>
+            <strong>LPU Venue Admin</strong>
+            <small>Lovely Professional University</small>
+          </div>
+          <button class="dots">•••</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu">☰</button>
+
+        <div class="breadcrumb">
+          Workspace <span>/</span> <strong>Overview</strong>
+        </div>
+
+        <div class="top-actions">
+          <span class="today-label" id="todayLabel"></span>
+          <button class="icon-button" id="notificationButton">♧<i></i></button>
+          <div class="top-avatar">AD</div>
+        </div>
+      </header>
+
+      <section class="page-wrap" id="overview">
+
+        <div class="welcome-row">
+          <div>
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              LOVELY PROFESSIONAL UNIVERSITY · PHAGWARA
+            </div>
+
+            <h1>Welcome to LPU CampusSpace ✦</h1>
+
+            <p class="subtitle">
+              Manage university venues, student events, and faculty bookings from one place.
+            </p>
+          </div>
+
+          <button class="primary-button" id="newBookingTop">
+            <span>＋</span> New reservation
+          </button>
+        </div>
+
+        <!-- Dashboard Statistics -->
+        <div class="stats-grid">
+
+          <article class="stat-card">
+            <div class="stat-top">
+              <span>Total venues</span>
+              <span class="stat-icon purple">▤</span>
+            </div>
+            <div class="stat-value" id="totalVenues">4</div>
+            <div class="stat-foot">Spaces available on campus</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-top">
+              <span>Reserved today</span>
+              <span class="stat-icon blue">▣</span>
+            </div>
+            <div class="stat-value" id="reservedToday">2</div>
+            <div class="stat-foot">Confirmed bookings</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-top">
+              <span>Pending requests</span>
+              <span class="stat-icon amber">◷</span>
+            </div>
+            <div class="stat-value" id="pendingCount">2</div>
+            <div class="stat-foot">Awaiting coordinator review</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-top">
+              <span>Available spaces</span>
+              <span class="stat-icon green">✓</span>
+            </div>
+            <div class="stat-value" id="availableCount">4</div>
+            <div class="stat-foot">Ready for a new reservation</div>
+          </article>
+
+        </div>
+
+        <!-- Calendar and Upcoming Reservations -->
+        <div class="content-grid">
+
+          <section class="panel calendar-panel" id="calendar">
+
+            <div class="panel-heading">
+              <div>
+                <div class="section-kicker">PLAN YOUR EVENTS</div>
+                <h2>Reservation calendar</h2>
+                <p>Check venue availability and manage time slots.</p>
+              </div>
+
+              <div class="calendar-controls">
+                <button class="square-btn" id="prevMonth">‹</button>
+                <strong id="monthLabel"></strong>
+                <button class="square-btn" id="nextMonth">›</button>
+                <button class="today-btn" id="todayButton">Today</button>
+              </div>
+            </div>
+
+            <div class="calendar-toolbar">
+              <div class="legend">
+                <span><i class="legend-dot available"></i> Available</span>
+                <span><i class="legend-dot pending"></i> Pending</span>
+                <span><i class="legend-dot reserved"></i> Reserved</span>
+              </div>
+
+              <select id="calendarVenueFilter">
+                <option value="all">All venues</option>
+              </select>
+            </div>
+
+            <div class="calendar-weekdays">
+              <span>MON</span><span>TUE</span><span>WED</span>
+              <span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
+            </div>
+
+            <div class="calendar-grid" id="calendarGrid"></div>
+
+            <div class="selected-day-panel">
+              <div class="selected-day-title">
+                <div>
+                  <span class="section-kicker">SELECTED DATE</span>
+                  <h3 id="selectedDateTitle">Select a date</h3>
+                </div>
+
+                <button class="text-button" id="bookSelectedDate">
+                  ＋ Book this date
+                </button>
+              </div>
+
+              <div id="daySlots" class="day-slots"></div>
+            </div>
+          </section>
+
+          <aside class="right-column">
+
+            <section class="panel upcoming-panel">
+              <div class="panel-heading compact">
+                <div>
+                  <div class="section-kicker">WHAT'S NEXT</div>
+                  <h2>Upcoming reservations</h2>
+                </div>
+                <a class="view-link" href="#requests">View all →</a>
+              </div>
+
+              <div id="upcomingList" class="upcoming-list"></div>
+            </section>
+
+            <section class="panel quick-panel">
+              <div class="quick-icon">✧</div>
+
+              <div>
+                <h3>Make room for great ideas.</h3>
+                <p>Reserve an auditorium, seminar hall, or classroom in a few clicks.</p>
+
+                <button class="outline-button" id="quickBook">
+                  Create a booking →
+                </button>
+              </div>
+            </section>
+
+          </aside>
+        </div>
+
+        <!-- Venue Directory -->
+        <section class="panel venues-panel" id="venues">
+
+          <div class="panel-heading">
+            <div>
+              <div class="section-kicker">FIND YOUR SPACE</div>
+              <h2>LPU venue directory</h2>
+              <p>Explore spaces and their facilities before you book.</p>
+            </div>
+
+            <div class="venue-tools">
+              <label class="search-box">
+                <span>⌕</span>
+                <input type="search" id="venueSearch" placeholder="Search venues...">
+              </label>
+
+              <select id="venueTypeFilter">
+                <option value="all">All venue types</option>
+                <option>Auditorium</option>
+                <option>Seminar Hall</option>
+                <option>Smart Classroom</option>
+                <option>Conference Room</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="venue-grid" id="venueGrid"></div>
+        </section>
+
+        <!-- Booking Requests -->
+        <section class="panel requests-panel" id="requests">
+
+          <div class="panel-heading">
+            <div>
+              <div class="section-kicker">REVIEW & APPROVE</div>
+              <h2>Booking requests</h2>
+              <p>Review requests submitted by students and faculty.</p>
+            </div>
+
+            <span class="request-total" id="requestTotal">0 requests</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>EVENT / ORGANIZER</th>
+                  <th>VENUE</th>
+                  <th>DATE & TIME</th>
+                  <th>ATTENDANCE</th>
+                  <th>STATUS</th>
+                  <th>ACTION</th>
+                </tr>
+              </thead>
+
+              <tbody id="requestTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <footer>
+          © 2026 Lovely Professional University · LPU CampusSpace
+          <span>A smarter way to manage university spaces</span>
+        </footer>
+
+      </section>
+    </main>
+  </div>
+
+  <!-- Booking Form Modal -->
+  <div class="modal-backdrop" id="bookingModal" aria-hidden="true">
+
+    <div class="modal" role="dialog" aria-modal="true">
+
+      <div class="modal-header">
+        <div>
+          <div class="section-kicker">LPU CAMPUSSPACE / NEW REQUEST</div>
+          <h2>Create a reservation</h2>
+          <p>Submit your LPU student or faculty event details.</p>
+        </div>
+
+        <button class="close-modal" id="closeModal">×</button>
+      </div>
+
+      <form id="bookingForm">
+
+        <div class="form-grid">
+
+          <label class="field full">
+            Event name
+            <input name="eventName" required maxlength="70"
+              placeholder="Annual Tech Symposium">
+          </label>
+
+          <label class="field">
+            Organizer name
+            <input name="organizer" required placeholder="Full name">
+          </label>
+
+          <label class="field">
+            LPU email address
+            <input name="email" type="email" required placeholder="name@lpu.in">
+          </label>
+
+          <label class="field">
+            Registration / Employee ID
+            <input name="campusId" required placeholder="Enter LPU ID">
+          </label>
+
+          <label class="field">
+            Department / School
+            <select name="department" required>
+              <option value="">Select school / department</option>
+              <option>School of Computer Science and Engineering</option>
+              <option>School of Electronics and Electrical Engineering</option>
+              <option>Mittal School of Business</option>
+              <option>School of Mechanical Engineering</option>
+              <option>School of Bioengineering and Biosciences</option>
+              <option>School of Law</option>
+              <option>School of Liberal Arts</option>
+              <option>School of Hotel Management and Tourism</option>
+              <option>Other / Administration</option>
+            </select>
+          </label>
+
+          <label class="field">
+            Event category
+            <select name="eventCategory" required>
+              <option value="">Select event category</option>
+              <option>Academic / Guest Lecture</option>
+              <option>Technical / Workshop</option>
+              <option>Club / Student Activity</option>
+              <option>Cultural / Festival</option>
+              <option>Conference / Seminar</option>
+              <option>Sports / Other</option>
+            </select>
+          </label>
+
+          <label class="field">
+            Venue
+            <select name="venue" id="bookingVenue" required></select>
+          </label>
+
+          <label class="field">
+            Event date
+            <input name="date" id="bookingDate" type="date" required>
+          </label>
+
+          <label class="field">
+            Start time
+            <select name="startTime" id="startTime" required></select>
+          </label>
+
+          <label class="field">
+            End time
+            <select name="endTime" id="endTime" required></select>
+          </label>
+
+          <label class="field">
+            Expected attendance
+            <input name="attendance" type="number" min="1" max="2000"
+              required placeholder="e.g. 120">
+          </label>
+
+          <div class="field full">
+            <span class="field-label">Required AV equipment</span>
+
+            <div class="check-grid">
+              <label><input type="checkbox" name="av" value="Projector"> Projector</label>
+              <label><input type="checkbox" name="av" value="Microphone"> Microphone</label>
+              <label><input type="checkbox" name="av" value="Speakers"> Speakers</label>
+              <label><input type="checkbox" name="av" value="Video conferencing"> Video conferencing</label>
+            </div>
+          </div>
+
+          <label class="field full">
+            Additional notes
+            <textarea name="notes" rows="3"
+              placeholder="Any setup requirements..."></textarea>
+          </label>
+
+        </div>
+
+        <div class="form-note">
+          Your request is saved in this browser as <strong>Pending</strong>.
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="cancel-button" id="cancelModal">Cancel</button>
+          <button type="submit" class="primary-button">Submit request →</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <!-- JavaScript Connection -->
+  <script src="script.js"></script>
+</body>
+</html>
